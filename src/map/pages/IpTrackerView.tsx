@@ -1,4 +1,4 @@
-function App() {
+const IpTrackerView = () => {
   return (
     <>
       IP Address Tracker Search for any IP address or domain IP Address Location
@@ -12,6 +12,5 @@ function App() {
       </div>
     </>
   );
-}
-
-export default App;
+};
+export default IpTrackerView;

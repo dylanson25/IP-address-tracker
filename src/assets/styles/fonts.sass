@@ -1,0 +1,16 @@
+$fontRubikNormal: ( "Light": 300, "Regular": 400, "Medium": 500, "SemiBold": 600, "Bold": 700, "ExtraBold": 800)
+$fontRubikItalic: ( "LightItalic": 300, "RegularItalic": 400, "MediumItalic": 500, "SemiBoldItalic": 600, "BoldItalic": 700, "ExtraBoldItalic": 800)
+
+@each $name,$fontWeight in $fontRubikNormal
+    @font-face
+        font-family: "Rubik"
+        src: url("../fonts/Rubik/Rubik-#{$name}.ttf")
+        font-style: normal
+        font-weight: $fontWeight
+
+@each $name,$fontWeight in $fontRubikItalic
+    @font-face
+        font-family: "Rubik"
+        src: url("../fonts/Rubik/Rubik-#{$name}.ttf")
+        font-style: italic
+        font-weight: $fontWeight

@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import IpTrackerView from "./map/pages/IpTrackerView";
+
+import "./assets/styles/main.sass";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <IpTrackerView />
   </React.StrictMode>
 );
