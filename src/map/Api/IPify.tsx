@@ -1,7 +1,7 @@
 import axios from "axios";
-const apiEndPoint = "https://geo.ipify.org/api/v2/";
+const apiEndPoint = "https://api.ipify.org/";
 
-class ApifyApiClass {
+class ApiIpify {
   constructor() {
     this.request = [];
     this._axios = axios.create({
@@ -26,4 +26,4 @@ class ApifyApiClass {
   }
 }
 
-export default new ApifyApiClass();
+export default new ApiIpify();
