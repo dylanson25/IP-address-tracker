@@ -2,6 +2,7 @@ import styles from "../assets/IpTrackerView.module.sass";
 
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { CardIpDetails } from "../components";
 import GeoApi from "../Api/GeoApi";
 import IpifyApi from "../Api/IPify";
 
@@ -69,7 +70,29 @@ const IpTrackerView = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>IP Address Tracker</h1>
-        <h2>{ipAddress}</h2>
+        <CardIpDetails
+          data={{
+            ip: "72.200.71.37",
+            location: {
+              country: "US",
+              region: "Arizona",
+              city: "Dreamland Villa",
+              lat: 33.42144,
+              lng: -111.71069,
+              postalCode: "",
+              timezone: "-07:00",
+              geonameId: 5293165,
+            },
+            as: {
+              asn: 22773,
+              name: "ASN-CXA-ALL-CCI-22773-RDC",
+              route: "72.200.64.0/18",
+              domain: "http://www.cox.com/peering",
+              type: "Cable/DSL/ISP",
+            },
+            isp: "Cox Communications Inc.",
+          }}
+        />
       </div>
       <MapContainer
         className={styles.leaftContainer}
