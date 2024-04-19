@@ -2,7 +2,7 @@ import styles from "../assets/IpTrackerView.module.sass";
 
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { CardIpDetails } from "../components";
+import { CardIpDetails, Input, Button } from "../components";
 import GeoApi from "../Api/GeoApi";
 import IpifyApi from "../Api/IPify";
 
@@ -11,56 +11,37 @@ const IpTrackerView = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [lat, setLat] = useState(33.42144);
   const [lng, setLng] = useState(-111.71069);
+  const [dataLocation, setDataLocation] = useState({});
 
   const getIP = async () => {
     try {
       setLoading(true);
       const { data } = await IpifyApi.get("");
-      console.log(data);
       setIpAddress(data);
-      setLoading(false);
+      await getLocation();
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const getLocation = async () => {
     try {
       setLoading(true);
-      // const { data } = await GeoApi.get(
-      //   `country,city?apiKey=${
-      //     import.meta.env.VITE_APP_IPIFY_API_KEY
-      //   }&ipAddress=72.200.71.37`
-      // );
-      const data = {
-        ip: "72.200.71.37",
-        location: {
-          country: "US",
-          region: "Arizona",
-          city: "Dreamland Villa",
-          lat: 33.42144,
-          lng: -111.71069,
-          postalCode: "",
-          timezone: "-07:00",
-          geonameId: 5293165,
-        },
-        as: {
-          asn: 22773,
-          name: "ASN-CXA-ALL-CCI-22773-RDC",
-          route: "72.200.64.0/18",
-          domain: "http://www.cox.com/peering",
-          type: "Cable/DSL/ISP",
-        },
-        isp: "Cox Communications Inc.",
-      };
+      const { data } = await GeoApi.get(
+        `country,city?apiKey=${
+          import.meta.env.VITE_APP_IPIFY_API_KEY
+        }&ipAddress=${ipAddress}`
+      );
 
       setLat(data.location.lat);
       setLng(data.location.lng);
       setIpAddress(data.ip);
-      setLoading(false);
+      setDataLocation(data);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -70,29 +51,15 @@ const IpTrackerView = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>IP Address Tracker</h1>
-        <CardIpDetails
-          data={{
-            ip: "72.200.71.37",
-            location: {
-              country: "US",
-              region: "Arizona",
-              city: "Dreamland Villa",
-              lat: 33.42144,
-              lng: -111.71069,
-              postalCode: "",
-              timezone: "-07:00",
-              geonameId: 5293165,
-            },
-            as: {
-              asn: 22773,
-              name: "ASN-CXA-ALL-CCI-22773-RDC",
-              route: "72.200.64.0/18",
-              domain: "http://www.cox.com/peering",
-              type: "Cable/DSL/ISP",
-            },
-            isp: "Cox Communications Inc.",
-          }}
-        />
+        <Input
+          value={ipAddress}
+          onChange={setIpAddress}
+          placeholder="72.200.71.37"
+          addonsRight
+        >
+          <Button text=">" disabled={loading} eventClick={getLocation} />
+        </Input>
+        {dataLocation?.ip && <CardIpDetails data={dataLocation} />}
       </div>
       <MapContainer
         className={styles.leaftContainer}
@@ -114,12 +81,3 @@ const IpTrackerView = () => {
   );
 };
 export default IpTrackerView;
-//   IP Address Tracker Search for any IP address or domain IP Address Location
-//   Timezone UTC ISP
-//   <div className="attribution">
-//     Challenge by{" "}
-//     <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">
-//       Frontend Mentor
-//     </a>
-//     . Coded by <a href="#">Your Name Here</a>.
-//   </div>

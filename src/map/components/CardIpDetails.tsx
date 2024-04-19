@@ -54,5 +54,5 @@ interface Data {
 }
 
 interface Props {
-  data: Data;
+  data: Data | object;
 }
