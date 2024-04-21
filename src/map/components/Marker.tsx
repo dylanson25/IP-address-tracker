@@ -12,7 +12,7 @@ const LocationMarker = ({ position }: Props) => {
   const map = useMap();
 
   const flyToIpAddress = useCallback(() => {
-    map.flyTo({ lat: position.lat, lng: position.lng });
+    map.flyTo({ lat: position.lat + 0.01, lng: position.lng }, 13);
   }, [position]);
 
   useEffect(() => {

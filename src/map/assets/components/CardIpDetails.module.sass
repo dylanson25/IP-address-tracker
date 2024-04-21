@@ -1,12 +1,12 @@
 .card
     background-color: white
     border-radius: 15px
-    max-width: 1110px
-    padding: 24px
+    max-width: 528px
+    padding: 16px 8px
     position: absolute
-    width: calc( 100% - 48px )
+    width: calc( 100% - 24px )
     z-index: 1000
-    bottom: 38%
+    bottom: -40%
     .cardBody
         > .info:last-child
             margin-bottom: 0
@@ -23,3 +23,31 @@
                 font-size: 2rem
                 font-weight: 500
                 line-height: 2.4rem
+
+@media (min-width: 375px)
+    .card
+        padding: 24px
+        width: calc( 100% - 48px )
+        bottom: -50%
+
+@media (min-width: 992px)
+    .card
+        bottom: -13%
+        padding: 24px 0
+        max-width: 1110px
+        .cardBody
+            display: flex
+            justify-content: center
+            align-items: center
+            height: 65px
+            .info
+                padding: 0 24px
+                max-width: 261px
+                margin-bottom: 0
+                text-align: left
+                border-right: solid 1px #979797
+                &:first-child
+                    padding-left: 0
+                &:last-child
+                    padding-right: 0
+                    border: none
