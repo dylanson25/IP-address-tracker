@@ -1,18 +1,18 @@
 import styles from "../assets/IpTrackerView.module.sass";
 
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { CardIpDetails, Input, Button } from "../components";
+import { CardIpDetails, Input, Button, Map } from "../components";
 import GeoApi from "../Api/GeoApi";
 import IpifyApi from "../Api/IPify";
 
 const IpTrackerView = () => {
   const [ipAddress, setIpAddress] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [lat, setLat] = useState(33.42144);
-  const [lng, setLng] = useState(-111.71069);
+  const [position, setPosition] = useState<Position>({
+    lat: 33.42144,
+    lng: -111.71069,
+  });
   const [dataLocation, setDataLocation] = useState({});
-
   const getIP = async () => {
     try {
       setLoading(true);
@@ -28,14 +28,36 @@ const IpTrackerView = () => {
   const getLocation = async () => {
     try {
       setLoading(true);
+      // const data = {
+      //   ip: "72.200.71.37",
+      //   location: {
+      //     country: "US",
+      //     region: "Arizona",
+      //     city: "Dreamland Villa",
+      //     lat: 33.42144,
+      //     lng: -111.71069,
+      //     postalCode: "",
+      //     timezone: "-07:00",
+      //     geonameId: 5293165,
+      //   },
+      //   as: {
+      //     asn: 22773,
+      //     name: "ASN-CXA-ALL-CCI-22773-RDC",
+      //     route: "72.200.64.0/18",
+      //     domain: "http://www.cox.com/peering",
+      //     type: "Cable/DSL/ISP",
+      //   },
+      //   isp: "Cox Communications",
+      // };
       const { data } = await GeoApi.get(
         `country,city?apiKey=${
           import.meta.env.VITE_APP_IPIFY_API_KEY
         }&ipAddress=${ipAddress}`
       );
-
-      setLat(data.location.lat);
-      setLng(data.location.lng);
+      setPosition({
+        lat: data.location.lat,
+        lng: data.location.lng,
+      });
       setIpAddress(data.ip);
       setDataLocation(data);
     } catch (error) {
@@ -43,7 +65,9 @@ const IpTrackerView = () => {
     }
     setLoading(false);
   };
-
+  // 198.203.7.221
+  // 72.200.71.37
+  // 192.212.174.101
   useEffect(() => {
     getIP();
   }, []);
@@ -61,23 +85,13 @@ const IpTrackerView = () => {
         </Input>
         {dataLocation?.ip && <CardIpDetails data={dataLocation} />}
       </div>
-      <MapContainer
-        className={styles.leaftContainer}
-        center={[lat, lng]}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[lat, lng]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
+      <Map position={position} className={styles.leaftContainer} />
     </div>
   );
 };
 export default IpTrackerView;
+
+interface Position {
+  lat: number;
+  lng: number;
+}
