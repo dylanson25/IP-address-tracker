@@ -35,32 +35,11 @@ const IpTrackerView = () => {
   const getLocation = async () => {
     try {
       setLoading(true);
-      const data = {
-        ip: "72.200.71.37",
-        location: {
-          country: "US",
-          region: "Arizona",
-          city: "Dreamland Villa",
-          lat: 33.42144,
-          lng: -111.71069,
-          postalCode: "",
-          timezone: "-07:00",
-          geonameId: 5293165,
-        },
-        as: {
-          asn: 22773,
-          name: "ASN-CXA-ALL-CCI-22773-RDC",
-          route: "72.200.64.0/18",
-          domain: "http://www.cox.com/peering",
-          type: "Cable/DSL/ISP",
-        },
-        isp: "Cox Communications",
-      };
-      // const { data } = await GeoApi.get(
-      //   `country,city?apiKey=${
-      //     import.meta.env.VITE_APP_IPIFY_API_KEY
-      //   }&ipAddress=${ipAddress}`
-      // );
+      const { data } = await GeoApi.get(
+        `country,city?apiKey=${
+          import.meta.env.VITE_APP_IPIFY_API_KEY
+        }&ipAddress=${ipAddress}`
+      );
       setPosition({
         lat: data.location.lat,
         lng: data.location.lng,
