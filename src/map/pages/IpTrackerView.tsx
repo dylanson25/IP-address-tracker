@@ -51,9 +51,7 @@ const IpTrackerView = () => {
     }
     setLoading(false);
   };
-  // 198.203.7.221
-  // 72.200.71.37
-  // 192.212.174.101
+
   useEffect(() => {
     getIP();
   }, []);
@@ -69,7 +67,7 @@ const IpTrackerView = () => {
         <Input
           value={ipAddress}
           onChange={setIpAddress}
-          placeholder={ipUser}
+          placeholder="Search for any IP address or domain"
           addonsRight
         >
           <Button

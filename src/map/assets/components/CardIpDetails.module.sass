@@ -32,22 +32,29 @@
 
 @media (min-width: 992px)
     .card
-        bottom: -13%
+        bottom: -22%
         padding: 24px 0
         max-width: 1110px
+        width: fit-content
         .cardBody
-            display: flex
-            justify-content: center
+            display: grid
+            grid-template-columns: auto auto auto auto
             align-items: center
-            height: 65px
+            height: 113px
             .info
+                display: flex
+                flex-direction: column
+                justify-content: center
                 padding: 0 24px
+                max-height: 88px
+                height: 100%
                 max-width: 261px
                 margin-bottom: 0
                 text-align: left
                 border-right: solid 1px #979797
-                &:first-child
-                    padding-left: 0
+                .infoTitle
+                    font-size: 1.2rem
+                .infoText
+                    font-size: 2.6rem
                 &:last-child
-                    padding-right: 0
                     border: none
